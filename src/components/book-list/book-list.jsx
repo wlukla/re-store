@@ -9,6 +9,17 @@ import './book-list.css'
 
 const BookList = ({ books, bookstoreService, booksLoaded }) => {
 
+  // const useBookList = () => {
+  //   const request = useCallback(() => bookstoreService.getBooks(), [])
+  //   return useRequest(request);
+  // }
+
+  // const useRequest = () => {
+  //   const initialState = useMemo(() => ({
+
+  //   }))
+  // }
+
   useEffect(() => {
     // 1. get data
     const data = bookstoreService.getBooks();
