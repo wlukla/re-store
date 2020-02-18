@@ -5,6 +5,8 @@ import withBookstoreService from '../hoc/';
 import { booksLoaded } from '../../actions';
 import { compose } from '../../utils';
 
+import './book-list.css'
+
 const BookList = ({ books, bookstoreService, booksLoaded }) => {
 
   useEffect(() => {
@@ -16,7 +18,7 @@ const BookList = ({ books, bookstoreService, booksLoaded }) => {
   }, [])
 
   return (
-    <ul>
+    <ul className="book-list">
       {
         books.map((book) => (
           <li key={book.id}><BookListItem book={book} /></li>
