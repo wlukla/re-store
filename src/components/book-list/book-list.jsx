@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import withBookstoreService from '../hoc/';
 import { booksLoaded } from '../../actions';
 import { compose } from '../../utils';
+import Spinner from '../spinner'
 
 import './book-list.css'
 
-const BookList = ({ books, bookstoreService, booksLoaded }) => {
+const BookList = ({ books, bookstoreService, booksLoaded, loading }) => {
 
   // const useBookList = () => {
   //   const request = useCallback(() => bookstoreService.getBooks(), [])
@@ -21,12 +22,15 @@ const BookList = ({ books, bookstoreService, booksLoaded }) => {
   // }
 
   useEffect(() => {
-    // 1. get data
-    const data = bookstoreService.getBooks();
-    console.log(data);
-    // 2. transfer to store
-    booksLoaded(data)
+    bookstoreService.getBooks()
+      .then((data) => {
+        booksLoaded(data)
+      });
   }, [])
+
+  if (loading) {
+    return <Spinner />
+  }
 
   return (
     <ul className="book-list">
@@ -39,7 +43,7 @@ const BookList = ({ books, bookstoreService, booksLoaded }) => {
   )
 }
 
-const mapStateToProps = ({ books }) => ({ books });
+const mapStateToProps = ({ books, loading }) => ({ books, loading });
 const mapDispatchToProps = { booksLoaded };
 
 export default compose(
