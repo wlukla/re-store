@@ -26,7 +26,7 @@ const BookList = ({ books, bookstoreService, booksLoaded, loading }) => {
       .then((data) => {
         booksLoaded(data)
       });
-  }, [])
+  }, [booksLoaded, bookstoreService])
 
   if (loading) {
     return <Spinner />
