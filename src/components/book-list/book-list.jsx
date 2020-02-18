@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import BookListItem from '../book-list-item';
+import { connect } from 'react-redux';
+import withBookstoreService from '../hoc/';
+import { booksLoaded } from '../../actions';
+import { compose } from '../../utils';
 
-const BookList = ({ books }) => {
+const BookList = ({ books, bookstoreService, booksLoaded }) => {
+
+  useEffect(() => {
+    // 1. get data
+    const data = bookstoreService.getBooks();
+    console.log(data);
+    // 2. transfer to store
+    booksLoaded(data)
+  }, [])
+
   return (
     <ul>
       {
@@ -13,4 +26,10 @@ const BookList = ({ books }) => {
   )
 }
 
-export default BookList;
+const mapStateToProps = ({ books }) => ({ books });
+const mapDispatchToProps = { booksLoaded };
+
+export default compose(
+  withBookstoreService(),
+  connect(mapStateToProps, mapDispatchToProps),
+)(BookList);
