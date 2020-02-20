@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { compose } from '../utils';
 
@@ -33,10 +34,10 @@ const mapStateToProps = ({ bookList: { books, loading, error } }) => {
 }
 
 const mapDispatchToProps = (dispatch, { bookstoreService }) => {
-  return {
-    fetchBooks: fetchBooks(bookstoreService, dispatch),
-    onAddToCart: (id) => dispatch(bookAddedToCart(id)),
-  }
+  return bindActionCreators({
+    fetchBooks: fetchBooks(bookstoreService),
+    onAddToCart: bookAddedToCart,
+  }, dispatch)
 }
 
 export default compose(
