@@ -15,21 +15,13 @@ const BookList = (props) => {
   const {
     books,
     loading,
-    bookstoreService,
-    booksRequested,
-    booksLoaded,
-    booksError,
+    fetchBooks,
     error,
   } = props;
 
   useEffect(() => {
-    booksRequested();
-
-    bookstoreService.getBooks()
-      .then((data) => booksLoaded(data))
-      .catch((error) => booksError(error));
-
-  }, [booksLoaded, bookstoreService, booksRequested, booksError]);
+    fetchBooks();
+  }, [fetchBooks]);
 
   if (loading) {
     return <Spinner />
@@ -51,11 +43,18 @@ const BookList = (props) => {
 }
 
 const mapStateToProps = ({ books, loading, error }) => ({ books, loading, error });
-const mapDispatchToProps = {
-  booksLoaded,
-  booksRequested,
-  booksError,
-};
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { bookstoreService } = ownProps;
+  return {
+    fetchBooks: () => {
+      dispatch(booksRequested());
+
+      bookstoreService.getBooks()
+        .then((data) => dispatch(booksLoaded(data)))
+        .catch((error) => dispatch(booksError(error)));
+    }
+  }
+}
 
 export default compose(
   withBookstoreService(),
