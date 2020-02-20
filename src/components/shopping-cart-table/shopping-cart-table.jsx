@@ -4,6 +4,12 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlusCircle, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 
+import {
+  bookDeletedFromCart,
+  bookDecreasedInCart,
+  bookAddedToCart,
+} from '../../actions';
+
 
 
 const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete}) => {
@@ -18,12 +24,6 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete}) =>
         <td>{total}</td>
         <td className="actions">
           <button
-            className="btn btn-outline-danger btn-sm"
-            onClick={ () => onDelete(id) }
-          >
-            <Icon icon={faTrash} />
-          </button>
-          <button
             className="btn btn-outline-success btn-sm"
             onClick={ () => onIncrease(id) }
           >
@@ -34,6 +34,12 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete}) =>
             onClick={ () => onDecrease(id) }
           >
             <Icon icon={faMinusCircle} />
+          </button>
+          <button
+            className="btn btn-outline-danger btn-sm"
+            onClick={ () => onDelete(id) }
+          >
+            <Icon icon={faTrash} />
           </button>
         </td>
       </tr>
@@ -73,18 +79,10 @@ const mapStateToProps = ({ cartItems, orderTotal }) => ({
   total: orderTotal,
 })
 
-const mapDispatchToProps = () => {
-  return {
-    onIncrease: (id) => {
-      console.log('increased', {id})
-    },
-    onDecrease: (id) => {
-      console.log('decreased', {id})
-    },
-    onDelete: (id) => {
-      console.log('deleted', {id})
-    },
-  }
+const mapDispatchToProps = {
+  onIncrease: bookAddedToCart,
+  onDecrease: bookDecreasedInCart,
+  onDelete: bookDeletedFromCart,
 }
 
 export default connect(
