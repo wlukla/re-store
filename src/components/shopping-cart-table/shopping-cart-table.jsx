@@ -74,7 +74,7 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete}) =>
   )
 }
 
-const mapStateToProps = ({ cartItems, orderTotal }) => ({
+const mapStateToProps = ({ shoppingCart: { cartItems, orderTotal }}) => ({
   items: cartItems,
   total: orderTotal,
 })
