@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 const ShopHeader = ({ numItems, total }) => {
   return (
     <header className="shop-header">
-      <Link to="#" className="logo text-dark">ReStore</Link>
-      <Link to="#" className="shopping-cart">
+      <Link to="/" className="logo text-dark">ReStore</Link>
+      <Link to="/cart" className="shopping-cart">
         <Icon className="cart-icon" icon={faShoppingCart} />
         {numItems} items (${total})
       </Link>
